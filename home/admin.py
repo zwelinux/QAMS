@@ -15,6 +15,42 @@ class SubjectAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superadmin:
+            return qs
+        return qs.filter(responsibility=request.user)
+    
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.responsibility = request.user
+        obj.save()
+
+    def has_view_permission(self, request, obj=None):
+        has_class_permission = super().has_view_permission(request, obj)
+        if not has_class_permission:
+            return False
+        if obj is not None and not request.user.is_superadmin:
+            return obj.responsibility == request.user
+        return True
+    
+    def has_change_permission(self, request, obj=None):
+        has_class_permission = super().has_change_permission(request, obj)
+        if not has_class_permission:
+            return False
+        if obj is not None and not request.user.is_superadmin:
+            return obj.responsibility == request.user
+        return True
+    
+    def has_delete_permission(self, request, obj=None):
+        has_class_permission = super().has_delete_permission(request, obj)
+        if not has_class_permission:
+            return False
+        if obj is not None and not request.user.is_superadmin:
+            return obj.responsibility == request.user
+        return True
+    
     list_display = ['dr', 'date', 'session']
     prepopulated_fields = {'slug': ('session',)}
     list_filter = ['session', 'date']
@@ -37,3 +73,5 @@ class AttendanceListAdmin(admin.ModelAdmin):
 @admin.register(Dr)
 class DrAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+
+

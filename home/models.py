@@ -11,6 +11,8 @@ from django.core.files import File
 from PIL import Image, ImageDraw
 from accounts.models import Account
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.conf import settings 
 
 
 class Dr(models.Model):
@@ -41,6 +43,7 @@ class Attendance(models.Model):
     date = models.CharField(max_length=200)
     url = models.URLField(max_length=200)
     qr_code = models.ImageField(upload_to='Attendance', blank=True)
+    responsibility = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Attendance QR'
