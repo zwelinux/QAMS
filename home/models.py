@@ -135,3 +135,25 @@ class Leave_List(models.Model):
 
     def __str__(self):
         return str(self.loginid)
+
+class Student(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def attendance_percentage(self):
+        total_days = Percentage.objects.filter(student=self).count()
+        present_days = Percentage.objects.filter(student=self, present=True).count()
+        if total_days == 0:
+            return 0
+        return (present_days / total_days) * 100
+
+class Percentage(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    date = models.DateField()
+    present = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.student.name} - {self.date}"

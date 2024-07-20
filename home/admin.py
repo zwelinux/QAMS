@@ -1,6 +1,26 @@
 from django.contrib import admin
 from .models import  Dr ,Attendance, Attendance_List, Leave, Leave_List, Subject
 
+admin.site.site_header = 'QAMS'
+admin.site.site_title = 'QAMS'
+
+from .models import Student, Percentage
+
+class PercentageInline(admin.TabularInline):
+    model = Percentage
+    extra = 1
+
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'attendance_percentage')
+    inlines = [PercentageInline]
+
+    def attendance_percentage(self, obj):
+        return f"{obj.attendance_percentage:.2f}%"
+    attendance_percentage.short_description = 'Attendance Percentage'
+
+admin.site.register(Student, StudentAdmin)
+# admin.site.register(Percentage)
+
 
 # @admin.register(Leave)
 # class LeaveAdmin(admin.ModelAdmin):
