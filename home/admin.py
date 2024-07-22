@@ -79,8 +79,8 @@ class AttendanceAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance_List)
 class AttendanceListAdmin(admin.ModelAdmin):
-    list_display = ['user', 'dr', 'loginid']
-    list_filter = ['created_at', 'user', 'dr']
+    list_display = ['user', 'dr', 'loginid', 'qrcode']
+    list_filter = ['created_at', 'user', 'dr', 'realated_subject__name']
     search_fields = ['loginid'] # Search id
 
 # @admin.register(Leave_List)

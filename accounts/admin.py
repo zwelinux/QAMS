@@ -4,6 +4,7 @@ from .models import Account
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin
+from import_export import resources
 
 # Unregister the existing Group model
 admin.site.unregister(Group)
@@ -14,6 +15,7 @@ class CustomGroupAdmin(GroupAdmin):
 
 # Register Group model again
 admin.site.register(Group, CustomGroupAdmin)
+
 
 class AccountAdmin(UserAdmin):
     list_display = ['email', 'first_name', 'last_name', 'student','is_admin', 'is_active']

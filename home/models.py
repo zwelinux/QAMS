@@ -79,6 +79,7 @@ class Attendance_List(models.Model):
     ip = models.CharField(max_length=20, blank=True)
     status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    realated_subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Attendance List'

@@ -96,6 +96,7 @@ def attendance_submit(request, dr_id, qrcodeid):
                     newstudent.loginid = userid
                     newstudent.user = request.user
                     newstudent.dr = qrnew.dr
+                    newstudent.realated_subject = qrnew.subject
                     newstudent.ip = request.META.get('REMOTE_ADDR')
                     newstudent.qrcode = qrnew
                     newstudent.save()
