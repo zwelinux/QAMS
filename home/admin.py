@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import  Dr ,Attendance, Attendance_List, Leave, Leave_List, Subject
+from .models import  Dr ,Attendance, Attendance_List, Leave, Leave_List, Subject, Calculation
+
 
 admin.site.site_header = 'QAMS'
 admin.site.site_title = 'QAMS'
@@ -9,6 +10,13 @@ from .models import Student, Percentage
 class PercentageInline(admin.TabularInline):
     model = Percentage
     extra = 1
+
+
+class CalculationAdmin(admin.ModelAdmin):
+
+    list_display = ['student_name', 'present_date', 'total_date', 'rollcall']
+
+admin.site.register(Calculation, CalculationAdmin)
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('name', 'attendance_percentage')
@@ -93,5 +101,3 @@ class AttendanceListAdmin(admin.ModelAdmin):
 @admin.register(Dr)
 class DrAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
-
-

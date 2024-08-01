@@ -7,9 +7,11 @@ SECRET_KEY = 'django-insecure-_fr2(w6o2$jvm&=ic2puq*f(xp+vuqoeit-4-jld8o9i(%=ifo
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.5.50.182']
+ALLOWED_HOSTS = ['192.168.48.186']
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -18,7 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'accounts',
-    # 'import_export',
+    'import_export',
+
 ]
 
 MIDDLEWARE = [

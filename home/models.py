@@ -87,6 +87,19 @@ class Attendance_List(models.Model):
     def __str__(self):
         return str(self.loginid)
 
+class Calculation(models.Model):
+    student_name = models.ForeignKey(Account, on_delete=models.CASCADE)
+    present_date = models.IntegerField()
+    total_date = models.IntegerField()
+
+    def __str__(self):
+        return str(self.student_name)
+    
+    @property
+    def rollcall(self):
+        if self.present_date == 0:
+            return 0
+        return (self.present_date / self.total_date) * 100
 
 
 class Leave(models.Model):
