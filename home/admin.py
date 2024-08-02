@@ -5,13 +5,13 @@ from .models import  Dr ,Attendance, Attendance_List, Leave, Leave_List, Subject
 admin.site.site_header = 'QAMS'
 admin.site.site_title = 'QAMS'
 
+from accounts.models import Account
+
 from .models import Student, Percentage
 
 class PercentageInline(admin.TabularInline):
     model = Percentage
     extra = 1
-
-
 class CalculationAdmin(admin.ModelAdmin):
 
     list_display = ['student_name', 'present_date', 'total_date', 'rollcall']
@@ -44,11 +44,12 @@ class SubjectAdmin(admin.ModelAdmin):
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
     
+    
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superadmin:
             return qs
-        return qs.filter(responsibility=request.user)
+        return qs.filter(responsibility=request.user.id)
     
     def save_model(self, request, obj, form, change):
         if not change:
@@ -79,7 +80,7 @@ class AttendanceAdmin(admin.ModelAdmin):
             return obj.responsibility == request.user
         return True
     
-    list_display = ['dr', 'date', 'session']
+    list_display = ['date', 'session']
     prepopulated_fields = {'slug': ('session',)}
     list_filter = ['session', 'date']
     search_fields = ['session', 'date']

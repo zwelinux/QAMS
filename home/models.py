@@ -36,14 +36,15 @@ class Subject(models.Model):
         return self.name
 
 class Attendance(models.Model):
-    dr = models.ForeignKey(Dr, on_delete=models.CASCADE)
+    # dr = models.ForeignKey(Dr, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     session = models.CharField(max_length=200)
     slug = models.SlugField(max_length=100, unique=True)
     date = models.CharField(max_length=200)
     url = models.URLField(max_length=200)
     qr_code = models.ImageField(upload_to='Attendance', blank=True)
-    responsibility = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    responsibility = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Attendance QR'
