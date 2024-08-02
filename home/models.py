@@ -36,7 +36,7 @@ class Subject(models.Model):
         return self.name
 
 class Attendance(models.Model):
-    # dr = models.ForeignKey(Dr, on_delete=models.CASCADE)
+    dr = models.ForeignKey(Dr, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     session = models.CharField(max_length=200)
     slug = models.SlugField(max_length=100, unique=True)
